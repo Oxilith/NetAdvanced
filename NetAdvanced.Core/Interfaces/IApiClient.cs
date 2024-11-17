@@ -1,10 +1,10 @@
 ﻿namespace NetAdvanced.Core.Interfaces;
 
-public interface IApiService
+public interface IApiClient
 {
     public TimeSpan ApiCallTimeout => TimeSpan.FromSeconds(30);
     public TimeSpan LongRunningApiCallTimeout => TimeSpan.FromSeconds(90);
     public TimeSpan RetryDelay => TimeSpan.FromSeconds(5);
-    Task<dynamic?> Get(string? arg3);
-    Task<object> Void(string? arg3);
+    public int RetryCount => 3;
+    public int PageSize => 100 * 100;
 }

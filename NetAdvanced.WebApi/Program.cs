@@ -1,25 +1,52 @@
+using NetAdvanced.Core.ApiClients;
+using NetAdvanced.Core.ApiServices;
+using NetAdvanced.Core.Interfaces;
 using NetAdvanced.WebApi.Api;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace NetAdvanced.WebApi;
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+internal abstract class Program
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
+        builder.Services.AddScoped<IStockApiClient,StockApiClient>();
+        builder.Services.AddScoped<IApiClientConfiguration<StockApiClient>, StockApiClientConfiguration>();
+        builder.Services.AddScoped<IApiService<StockApiClient>, ApiService<StockApiClient>>();
+        
+        builder.Services.AddScoped<StockApi>();
+
+        AddLogging(builder);
+
+        var app = builder.Build();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+
+        MapApis(app);
+
+        app.Run();
+    }
+
+    private static void AddLogging(WebApplicationBuilder webApplicationBuilder)
+    {
+        webApplicationBuilder.Logging.AddConsole();
+        webApplicationBuilder.Logging.AddDebug();
+    }
+
+    private static void MapApis(WebApplication webApplication)
+    {
+        using var scope = webApplication.Services.CreateAsyncScope();
+        var stockApi = scope.ServiceProvider.GetRequiredService<StockApi>();
+        stockApi.Map(webApplication);
+    }
 }
-
-app.UseHttpsRedirection();
-
-Api.Map(app);
-
-app.Run();

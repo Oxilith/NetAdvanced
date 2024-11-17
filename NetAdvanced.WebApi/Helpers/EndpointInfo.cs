@@ -1,4 +1,4 @@
-﻿namespace NetAdvanced.WebApi.Api;
+﻿namespace NetAdvanced.WebApi.Helpers;
 
 public class EndpointInfo(string path, string operationName, string summary, string description, string tagName)
 {

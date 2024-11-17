@@ -7,8 +7,7 @@ internal static class ApiHelpers
 {
     internal static RouteHandlerBuilder CreateGetEndpoint<T>(this WebApplication app,
         EndpointInfo endpointInfo,
-        Delegate endpointDelegate,
-        Type returnType)
+        Delegate endpointDelegate)
     {
         return app.MapGet(endpointInfo.Path, endpointDelegate)
             .WithName(endpointInfo.OperationName)
@@ -19,7 +18,7 @@ internal static class ApiHelpers
                 Tags = new List<OpenApiTag> { new() { Name = endpointInfo.TagName } },
                 Responses = new OpenApiResponses
                 {
-                    { StatusCodes.Status200OK.ToString(), new OpenApiResponse { Description = returnType.Name } },
+                    { StatusCodes.Status200OK.ToString(), new OpenApiResponse { Description = typeof(T).Name } },
                     {
                         StatusCodes.Status400BadRequest.ToString(),
                         new OpenApiResponse { Description = "Invalid request" }
