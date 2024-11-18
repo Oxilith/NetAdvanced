@@ -2,10 +2,10 @@
 
 
 /// <summary>
-/// Explain the difference between IList, IEnumerable and IQueryable.
-/// When filtering actually executes (deferred vs immediate execution).
-/// How filtering operations are performed.
-/// What are the performance implications.
+/// Wyjaśnij różnicę między IList, IEnumerable i IQueryable.
+/// Kiedy filtrowanie jest faktycznie wykonywane (deferred vs immediate execution).
+/// Jak wykonywane są operacje filtrowania.
+/// Jakie są implikacje wydajnościowe.
 /// </summary>
 public static class CollectionOperations
 {
