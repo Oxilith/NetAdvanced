@@ -55,3 +55,5 @@ public class Nullables
         return 0;
     }
 }
+
+//Napisz klassę Extensions, która zawiera metody rozszerzające dla typów int, string, List<int> oraz Dictionary<string, int>

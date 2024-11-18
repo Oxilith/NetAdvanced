@@ -70,7 +70,7 @@ public static class Statics
     }
 
     /// <summary>
-    /// Metoda rozszerzająca
+    /// Metoda anonimowa do agregacji danych
     /// Filtruje zwierzeta by dostac psy Bullldogi i koty Persians i aggreguje by dostac pierwiastek sumy lat.
     /// </summary>
     /// <param name="data">Dane wejściowe.</param>
@@ -78,5 +78,23 @@ public static class Statics
     public static IDictionary<string, double> BulldogsAndPersians(IEnumerable<Animal> data)
     {
         return new Dictionary<string, double>();
+    }
+
+    /// <summary>
+    /// Przepisz używając metody Aggregate
+    /// </summary>
+    /// <returns></returns>
+    public static int AggregateMethod()
+    {
+        int[] intNumbers = { 3, 5, 7, 9 };
+        var result = 2;
+        
+        foreach(var num in intNumbers)
+        {
+            var temp  = result * num;
+            result = temp;
+        }
+        
+        return result;
     }
 }
